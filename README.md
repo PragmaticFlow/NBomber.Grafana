@@ -1,4 +1,4 @@
-# NBomber.Grafana Dashboard
+# NBomber Grafana Dashboard
 
 Link on latest [nbomber-grafana-dashboard](https://github.com/PragmaticFlow/NBomber.Grafana/blob/main/nbomber-grafana-dashboard.json)
 
