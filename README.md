@@ -5,6 +5,3 @@
 
 ## Demo
 [![analyze trends](https://img.youtube.com/vi/US_zgCYP0lE/0.jpg)](https://youtu.be/US_zgCYP0lE)
-
-## Preview
-![analyze trends](https://github.com/PragmaticFlow/NBomber.Grafana/blob/main/assets/dashboard_example.jpg)
