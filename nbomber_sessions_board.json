@@ -99,7 +99,7 @@
                   {
                     "targetBlank": true,
                     "title": "",
-                    "url": "/d/nbomber/nbomber?var-cluster_id=${__data.fields[\"Cluster ID\"]}&var-test_suite=${__data.fields[\"Test Suite\"]}&var-test_name=${__data.fields[\"Test Name\"]}&var-session_id=${__value.raw}&from=${__from}&to=now&refresh=5s"
+                    "url": "/d/nbomber/nbomber?var-cluster_id=${__data.fields[\"Cluster ID\"]}&var-test_suite=${__data.fields[\"Test Suite\"]}&var-test_name=${__data.fields[\"Test Name\"]}&var-session_id=${__value.raw}﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿&﻿var-current_operation=﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿${__data.fields[\"Current Operation\"]}﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿&from=﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿${__from}﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿&to=now&refresh=5s"
                   }
                 ]
               }
@@ -123,22 +123,27 @@
                       "bombing": {
                         "color": "blue",
                         "index": 0,
-                        "text": "BOMBING"
+                        "text": "bombing"
                       },
                       "complete": {
                         "color": "green",
                         "index": 1,
-                        "text": "COMPLETE"
+                        "text": "complete"
                       },
                       "init": {
                         "color": "purple",
                         "index": 2,
-                        "text": "INIT"
+                        "text": "init"
                       },
                       "stop": {
                         "color": "red",
                         "index": 3,
-                        "text": "STOP"
+                        "text": "stop"
+                      },
+                      "warmup": {
+                        "color": "yellow",
+                        "index": 4,
+                        "text": "warmup"
                       }
                     },
                     "type": "value"
@@ -196,7 +201,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"session_id\", \"node_current_operation\" FROM \"nbomber\" WHERE $timeFilter GROUP BY \"cluster_id\", \"test_suite\", \"test_name\"",
+          "query": "SELECT \"session_id\", \"current_operation\" FROM \"nbomber\" WHERE $timeFilter GROUP BY \"cluster_id\", \"test_suite\", \"test_name\"",
           "rawQuery": true,
           "refId": "session_id",
           "resultFormat": "table",
@@ -227,6 +232,12 @@
                 "aggregations": [],
                 "operation": "groupby"
               },
+              "current_operation": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
               "node_current_operation": {
                 "aggregations": [
                   "lastNotNull"
@@ -254,13 +265,15 @@
             "excludeByName": {},
             "indexByName": {
               "cluster_id": 2,
-              "node_current_operation (lastNotNull)": 1,
+              "current_operation (lastNotNull)": 1,
               "session_id": 0,
               "test_name": 4,
               "test_suite": 3
             },
             "renameByName": {
               "cluster_id": "Cluster ID",
+              "current_operation": "Current Operation",
+              "current_operation (lastNotNull)": "Current Operation",
               "node_current_operation (lastNotNull)": "Current Operation",
               "session_id": "Session ID",
               "test_name": "Test Name",
@@ -280,13 +293,13 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "NBomber Sessions",
   "uid": "nbomber_sessions",
-  "version": 5,
+  "version": 2,
   "weekStart": ""
 }
