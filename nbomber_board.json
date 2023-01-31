@@ -68,7 +68,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1674502971631,
+  "iteration": 1675161465220,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -191,7 +191,7 @@
           "measurement": "nbomber",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(\"node_cores_count\") as \"cpu count\" FROM \"nbomber\" WHERE (\"session_id\" =~ /^$session_id$/ AND \"cluster_id\" =~ /^$cluster_id$/ AND \"test_suite\" =~ /^$test_suite$/ AND \"test_name\" =~ /^$test_name$/ AND \"current_operation\" = 'bombing') GROUP BY time(1d)",
+          "query": "SELECT sum(\"node_cores_count\") as \"cpu count\" FROM \"nbomber\" WHERE (\"session_id\" =~ /^$session_id$/ AND \"cluster_id\" =~ /^$cluster_id$/ AND \"test_suite\" =~ /^$test_suite$/ AND \"test_name\" =~ /^$test_name$/ AND \"current_operation\" = 'bombing') GROUP BY time(1d)",
           "rawQuery": true,
           "refId": "cores_count",
           "resultFormat": "table",
@@ -304,7 +304,7 @@
           ],
           "show": false
         },
-        "frameIndex": 1,
+        "frameIndex": 0,
         "showHeader": true,
         "sortBy": []
       },
@@ -326,75 +326,7 @@
           "policy": "default",
           "query": "SELECT last(\"status_code.count\") as \"count\" FROM \"nbomber\" WHERE (\"session_id\" =~ /^$session_id$/ AND \"cluster_id\" =~ /^$cluster_id$/ AND \"test_suite\" =~ /^$test_suite$/ AND \"test_name\" =~ /^$test_name$/ AND \"scenario\" =~ /^$scenario$/ AND \"current_operation\" = 'complete') GROUP BY time(1d), \"scenario\", \"status_code.status\"",
           "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "status_code.count"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "status_code.is_error"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "test_suite",
-              "operator": "=~",
-              "value": "/^$test_suite$/"
-            },
-            {
-              "condition": "AND",
-              "key": "test_name",
-              "operator": "=~",
-              "value": "/^$test_name$/"
-            },
-            {
-              "condition": "AND",
-              "key": "scenario",
-              "operator": "=~",
-              "value": "/^$scenario$/"
-            },
-            {
-              "condition": "AND",
-              "key": "step",
-              "operator": "=~",
-              "value": "/^$step$/"
-            },
-            {
-              "condition": "AND",
-              "key": "operation",
-              "operator": "=",
-              "value": "complete"
-            }
-          ]
-        },
-        {
-          "datasource": "${DS_INFLUXDB}",
-          "groupBy": [
-            {
-              "params": [
-                "status_code"
-              ],
-              "type": "tag"
-            }
-          ],
-          "hide": false,
-          "measurement": "nbomber",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT last(\"status_code.is_error\") as \"is error\" FROM \"nbomber\" WHERE (\"session_id\" =~ /^$session_id$/ AND \"cluster_id\" =~ /^$cluster_id$/ AND \"test_suite\" =~ /^$test_suite$/ AND \"test_name\" =~ /^$test_name$/ AND \"scenario\" =~ /^$scenario$/ AND \"current_operation\" = 'complete') GROUP BY time(1d), \"scenario\", \"status_code.status\"",
-          "rawQuery": true,
-          "refId": "A",
+          "refId": "count",
           "resultFormat": "table",
           "select": [
             [
@@ -453,17 +385,20 @@
           "id": "groupBy",
           "options": {
             "fields": {
-              "count": {
-                "aggregations": [
-                  "lastNotNull"
-                ],
-                "operation": "aggregate"
+              "Time": {
+                "aggregations": []
               },
-              "is error": {
+              "count": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "nbomber.is error {scenario: http_scenario, status_code.status: -101}": {
                 "aggregations": [
-                  "lastNotNull"
-                ],
-                "operation": "aggregate"
+                  "last"
+                ]
+              },
+              "nbomber.is error {scenario: http_scenario, status_code.status: OK}": {
+                "aggregations": []
               },
               "scenario": {
                 "aggregations": [],
@@ -477,17 +412,12 @@
           }
         },
         {
-          "id": "merge",
-          "options": {}
-        },
-        {
           "id": "organize",
           "options": {
             "excludeByName": {},
             "indexByName": {},
             "renameByName": {
-              "count (lastNotNull)": "count",
-              "is error (lastNotNull)": "is error",
+              "count": "",
               "status_code.status": "status"
             }
           }
@@ -2336,8 +2266,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
+                "color": "red"
               }
             ]
           }
@@ -3221,12 +3150,12 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
-            "bombing"
+            "complete"
           ],
           "value": [
-            "bombing"
+            "complete"
           ]
         },
         "hide": 0,
@@ -3241,12 +3170,12 @@
             "value": "warmup"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "bombing",
             "value": "bombing"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "complete",
             "value": "complete"
           }
@@ -3305,7 +3234,7 @@
     ]
   },
   "time": {
-    "from": "2023-01-23T19:37:47.874Z",
+    "from": "2023-01-31T10:32:43.407Z",
     "to": "now"
   },
   "timepicker": {
@@ -3325,6 +3254,6 @@
   "timezone": "",
   "title": "NBomber",
   "uid": "nbomber",
-  "version": 12,
+  "version": 7,
   "weekStart": ""
 }
