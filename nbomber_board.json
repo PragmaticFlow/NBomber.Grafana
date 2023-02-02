@@ -68,7 +68,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1675161465220,
+  "iteration": 1675342645222,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -147,7 +147,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"cluster_node\") as \"node count\" FROM \"nbomber\" WHERE (\"session_id\" =~ /^$session_id$/ AND \"cluster_id\" =~ /^$cluster_id$/ AND \"test_suite\" =~ /^$test_suite$/ AND \"test_name\" =~ /^$test_name$/ AND \"current_operation\" = 'bombing') GROUP BY time(1d)",
+          "query": "SELECT sum(\"cluster.node_count\") as \"node count\" FROM \"nbomber\" WHERE (\"session_id\" =~ /^$session_id$/ AND \"cluster_id\" =~ /^$cluster_id$/ AND \"test_suite\" =~ /^$test_suite$/ AND \"test_name\" =~ /^$test_name$/ AND \"current_operation\" = 'bombing') GROUP BY time(1d)",
           "rawQuery": true,
           "refId": "node_count",
           "resultFormat": "table",
@@ -191,7 +191,7 @@
           "measurement": "nbomber",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"node_cores_count\") as \"cpu count\" FROM \"nbomber\" WHERE (\"session_id\" =~ /^$session_id$/ AND \"cluster_id\" =~ /^$cluster_id$/ AND \"test_suite\" =~ /^$test_suite$/ AND \"test_name\" =~ /^$test_name$/ AND \"current_operation\" = 'bombing') GROUP BY time(1d)",
+          "query": "SELECT sum(\"cluster.node_cpu_count\") as \"cpu count\" FROM \"nbomber\" WHERE (\"session_id\" =~ /^$session_id$/ AND \"cluster_id\" =~ /^$cluster_id$/ AND \"test_suite\" =~ /^$test_suite$/ AND \"test_name\" =~ /^$test_name$/ AND \"current_operation\" = 'bombing') GROUP BY time(1d)",
           "rawQuery": true,
           "refId": "cores_count",
           "resultFormat": "table",
@@ -3152,10 +3152,10 @@
         "current": {
           "selected": false,
           "text": [
-            "complete"
+            "bombing"
           ],
           "value": [
-            "complete"
+            "bombing"
           ]
         },
         "hide": 0,
@@ -3170,12 +3170,12 @@
             "value": "warmup"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "bombing",
             "value": "bombing"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "complete",
             "value": "complete"
           }
@@ -3234,7 +3234,7 @@
     ]
   },
   "time": {
-    "from": "2023-01-31T10:32:43.407Z",
+    "from": "2023-02-02T12:52:22.944Z",
     "to": "now"
   },
   "timepicker": {
@@ -3254,6 +3254,6 @@
   "timezone": "",
   "title": "NBomber",
   "uid": "nbomber",
-  "version": 7,
+  "version": 2,
   "weekStart": ""
 }
