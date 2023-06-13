@@ -5,3 +5,6 @@
 
 ## Demo
 [![analyze trends](https://img.youtube.com/vi/US_zgCYP0lE/0.jpg)](https://youtu.be/US_zgCYP0lE)
+
+## Example 
+[Example with Grafana 9.5 / InfluxDb 2.7 and docker-compose](./example/readme.md)

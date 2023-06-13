@@ -1,0 +1,13 @@
+apiVersion: 1
+
+datasources:
+  - name: influxdb
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    jsonData:
+      dbName: NBomber
+      httpMode: GET
+      httpHeaderName1: 'Authorization'
+    secureJsonData:
+      httpHeaderValue1: 'Token N3Z_uUDSQ61qVp93K5dNzH3rbNcKxtphDLrjfS_DcX2cdTr3nR2pOlixGCx6HQ8VI66nqnyztOlPFoWFXoe62Q=='
