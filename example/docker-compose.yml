@@ -1,0 +1,25 @@
+version: '3'
+services:
+  influxdb:
+    image: influxdb:2.7
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: superuser
+      DOCKER_INFLUXDB_INIT_PASSWORD: Passw0rd!
+      DOCKER_INFLUXDB_INIT_ORG: MyOrg
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: N3Z_uUDSQ61qVp93K5dNzH3rbNcKxtphDLrjfS_DcX2cdTr3nR2pOlixGCx6HQ8VI66nqnyztOlPFoWFXoe62Q==
+      DOCKER_INFLUXDB_INIT_BUCKET: NBomber
+    ports:
+      - 8086:8086
+    volumes:
+    - influxdb-data:/var/lib/influxdb2
+
+  grafana:
+    image: grafana/grafana-oss:9.5.3
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+  
+volumes:
+  influxdb-data:
